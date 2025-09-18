@@ -1,0 +1,190 @@
+📄 Candidate-Job Recommendation System Documentation
+1. Introduction
+
+This project is an AI-powered recommendation system that matches job descriptions with candidate resumes. 
+It leverages LLMs for structured information extraction and vector similarity search for efficient candidate ranking.
+
+The goal is to help recruiters quickly identify the top candidates for a given role, based on skills and experience extracted automatically from text data.
+
+2. System Architecture
+🔹 Flow
+ Job Description (JD)                   Candidate Resumes
+          │                                      │
+          ▼                                      │
+   JD Extraction (LLM)                           │
+          │                                      │
+          └───────────► Embeddings ◄─────────────┘
+                          │
+                    Vector Database
+                          │
+                          ▼
+                 Candidate-Job Matching
+                          │
+                          ▼
+                 Ranked Candidate List
+
+🔹 Components
+
+Job Description Extraction
+
+Input: Raw job description text.
+
+Output: Structured JSON (skills, experience, role, etc.).
+
+Embedding & Storage
+
+Converts extracted fields into numerical embeddings.
+
+similarity search.
+
+Candidate-Job Matching
+
+Computes similarity score between JD and candidate profile embeddings.
+
+Ranks candidates by relevance.
+
+3. Workflow
+Example Flow
+
+Recruiter uploads a job description.
+
+System extracts:
+
+{
+  "Role": "Data Engineer",
+  "Skills": ["Python", "SQL", "Airflow", "ETL", "BigQuery"],
+  "Experience": "3+ years"
+}
+
+
+Data from candidate resumes.
+Example candidate output:
+
+{
+  "Name": "Alice Johnson",
+  "Skills": ["Python", "Pandas", "SQL", "ETL"],
+  "Experience": "4 years",
+  "Education": "B.Tech in Computer Science"
+}
+
+
+Both are embedded into vectors.
+
+Returning top N candidates sorted by similarity score.
+
+Final output:
+Example
+Candidate Ranking for Data Engineer:
+1. Alice Johnson - Score: 0.83
+2. Ravi Sharma - Score: 0.76
+3. Maria Lopez - Score: 0.71
+
+4. Tech Stack
+
+Python - Core programming language.
+
+LLMs (Gemini) - Information extraction.
+
+FAISS - Vector similarity search.
+
+pandas/numpy - Data handling.
+
+Flask/Streamlit/FastAPI (optional) - Web interface.
+
+5. Usage
+
+In terminal, set up environment and install dependencies:
+
+then run the following commands to start the application:
+Web App:
+streamlit run app.py
+
+
+Then the app will be opened in browser.
+
+Enter the JD in the text area and click on "Find Candidates".
+
+6. Limitations
+
+Extraction accuracy depends on LLM quality.
+
+Matching is purely semantic similarity (no learning-to-rank yet).
+
+Limited handling of domain-specific terminology.
+
+7. Future Enhancements
+
+We envision the system evolving in stages, with each stage combining multiple improvements.
+
+Stage 1 - Advanced Extraction & Resume Handling
+
+Improve LLM extraction to capture:
+
+Hard skills (e.g., Python, SQL, ETL).
+
+Soft skills (e.g., teamwork, leadership).
+
+Personality traits from resumes/JDs.
+
+Add support for multiple input formats: PDF, DOCX, LinkedIn profiles.
+
+👉 Combination: Stronger extraction + multi-format support = broader candidate coverage.
+
+Stage 2 - Scalable Storage & Search
+
+Replace FAISS with a cloud-native vector database (e.g., Pinecone, Weaviate).
+
+Enable real-time candidate lookup at scale.
+
+👉 Combination: Advanced extraction (Stage 1) + scalable vector DB (Stage 2) = production-ready matching engine.
+
+Stage 3 - Learning-to-Rank Model
+
+Train a supervised ML ranking model on historical hiring data.
+
+Use features like:
+
+JD-Candidate similarity.
+
+Candidate experience level.
+
+Recruiter feedback.
+
+👉 Combination: Vector DB (Stage 2) + learning-to-rank = personalized candidate recommendations.
+
+Stage 4 - Recruiter Dashboard & Feedback Loop
+
+Web-based dashboard to:
+
+Upload JDs and resumes.
+
+View candidate matches.
+
+Apply filters (location, experience, education).
+
+Feedback mechanism: Recruiters label matches as Good/Bad.
+
+System retrains periodically using feedback.
+
+👉 Combination: ML ranking (Stage 3) + recruiter feedback = continuous improvement system.
+
+Stage 5 - ATS Integration & Enterprise Features
+
+Integrate with Applicant Tracking Systems (ATS).
+
+Role-based access for recruiters, managers, and HR admins.
+
+Analytics dashboard:
+
+Hiring funnel.
+
+Candidate diversity metrics.
+
+Time-to-hire statistics.
+
+👉 Combination: Dashboard (Stage 4) + ATS integration = end-to-end hiring solution.
+
+8. Conclusion
+
+This system demonstrates the potential of combining LLMs with vector search for recruitment. 
+While still a prototype, it can be extended into a full-fledged AI recruitment assistant with the planned enhancements.
